@@ -1,0 +1,45 @@
+
+name: "Npm Audit"
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    # The branches below must be a subset of the branches above
+    branches: [ "main" ]
+  workflow_dispatch:
+
+jobs:
+  run-codeql-analysis:
+    name: Run Npm Audit Analysis
+    runs-on: ubuntu-latest
+    permissions:
+      actions: read
+      contents: read
+      security-events: write
+
+    strategy:
+      fail-fast: false
+      matrix:
+        language: [ 'javascript' ]
+
+    steps:
+      - name: Checkout gh-action-bump-maven-version
+        uses: actions/checkout@v4.1.7
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 16
+
+      - name: Audit javascript
+        id: scan
+        run: npm audit --json | tee npm-audit.json
+
+      # Optionally, publish scan results as a workflow artifact
+      - uses: actions/upload-artifact@v4.3.3
+        if: ${{ always() }}
+        with:
+          name: gh-action-bump-maven-version
+          path: |
+            npm-audit.json
