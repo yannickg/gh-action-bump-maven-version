@@ -25,7 +25,7 @@ jobs:
 
     steps:
       - name: Checkout gh-action-bump-maven-version
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4.1.7
 
       # Initializes the CodeQL tools for scanning.
       - name: Initialize CodeQL
@@ -44,7 +44,7 @@ jobs:
         uses: github/codeql-action/analyze@v3
 
       # Optionally, publish scan results as a workflow artifact
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4.3.3
         if: ${{ always() }}
         with:
           name: gh-action-bump-maven-version
