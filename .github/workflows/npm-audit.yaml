@@ -32,7 +32,7 @@ jobs:
         with:
           node-version: 16
 
-      - name: Install
+      - name: Audit javascript
         id: scan
         run: npm audit --json | tee npm-audit.json
 
