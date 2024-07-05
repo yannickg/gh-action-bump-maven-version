@@ -42,4 +42,4 @@ jobs:
         with:
           name: gh-action-bump-maven-version
           path: |
-            ${{ steps.scan.outputs.sarif-output }}
+            npm-audit.json
