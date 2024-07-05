@@ -33,4 +33,13 @@ jobs:
           node-version: 16
 
       - name: Install
-        run: npm audit --json
+        id: scan
+        run: npm audit --json | tee npm-audit.json
+
+      # Optionally, publish scan results as a workflow artifact
+      - uses: actions/upload-artifact@v4.3.3
+        if: ${{ always() }}
+        with:
+          name: gh-action-bump-maven-version
+          path: |
+            ${{ steps.scan.outputs.sarif-output }}
